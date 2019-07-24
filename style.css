@@ -1,7 +1,7 @@
 .container {
     max-width: 600px;
     margin: 20px auto;
-    background: #f7f7f7;
+    background: #FFFFFF;
 }
 
 body {
@@ -13,15 +13,15 @@ ul {
     list-style: none;    
 }
 header {
-    color: #007bff;
+    color: #D32F2F;
 }
 
 section p {
-    color: #6a6d6d;
+    color: #212121;
 } 
 
 fieldset {
-    color: #6a6d6d;
+    color: #212121;
 }
 
 .ProjectInfo {
@@ -29,6 +29,8 @@ fieldset {
 }
 
 h3 {
-    color: #007bff;
+    color: #D32F2F;
     margin-bottom: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
 }
