@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>CMHC Lifecycle Cost Analysis</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9-s6AAMEEFlv1FKTUHcaXNvFe2Gl5BW0&libraries=places"></script>
+</head>
+
+<body class="container">
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <header>
+        <div class="container">
+            <h3>CMHC Lifecycle Cost Analysis Calculator</h3>
+            <p>Lifecycle cost analysis allows you to perform high-level analysis of potential energy and greenhouse gas
+            emission savings of your housing project, understand the business case for energy efficiency, and help you
+            make an informed decision. 
+            </p>
+            <p>Please tell us a bit about your project.</p>
+        </div>
+    </header>
+
+    <form name="ProjectInfo">
+        <div class="ProjectInfo">
+            <label for="city">City:</label>
+            <input id="city" class="form-control" type="textbox" value=""  placeholder="Enter City Name">
+            </select>
+        </div>
+
+        <div class="ProjectInfo">
+            <label for="housingtype">Residential Type:</label>
+            <select name="HousingType" id="housingtype" class="form-control">
+                <option value="midrise">Midrise Apartment Building (1-4 storeys)</option>
+                <option value="highrise">Highrise Apartment Building (5+ storeys)</option>
+                <option value="sfh">Single Family Homes</option>
+                <option value="row">Row Homes</option>
+                <option value="duplex">Duplexes</option>
+                <option value="triplex">Triplexes</option>
+                <option value="fourplex">Fourplexes</option>
+            </select>
+        </div>
+
+        <div class="ProjectInfo">
+            <label for="baselinecode">Building Code (for Energy) being used as baseline:</label>
+            <select name="BaselineCode" id="baselinecode" class="form-control">
+                <option value="NECB2015">NECB 2015 (MURBs)</option>
+                <option value="NECB2017">NECB 2017 (MURBs)</option>
+                <option value="NCB">NCB 9.36 (Small Residences)</option>
+            </select>
+        </div>
+
+        <div class="ProjectInfo">
+            <p>Primary Energy Source for Space Heating:</p>
+            <ul>
+                <li>
+                    <input type="checkbox" id="gas" name="energy-source" value="naturalgas">
+                    <label for="gas">Natural Gas</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="electricity" name="energy-source" value="electricity">
+                    <label for="electricity">Electricity</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="diesel" name="energy-source" value="diesel">
+                    <label for="diesel">Diesel</label>
+
+                </li>
+                <li>
+                    <input type="checkbox" id="propane" name="energy-source" value="propane">
+                    <label for="propane">Propane</label>
+                </li>
+                <li>
+                    <input type="checkbox" id="other" name="energy-source" value="other">
+                    <label for="other">Other</label>
+                </li>
+            </ul>
+        </div>
+
+        <div class="ProjectInfo">
+            <label for="area">Floor Area:</label>
+            <input type="number" id="area" name="area" class="form-control">
+            <select name="area" id="area-unit" class="form-control">
+                <option value="square-feet">Square Feet (ft<sup>2</sup>)</option>
+                <option value="square-meters" selected>Square Meters (m<sup>2</sup>)</option>
+            </select>
+        </div>
+
+        <div class="ProjectInfo">
+            <label for="target">Target for energy performance:</label>
+            <select name="target" id="target" class="form-control">
+                <option value="0.25">25% better than local building code</option>
+                <option value="0.40">40% better than local building code</option>
+                <option value="0.50">50% better than local building code</option>
+                <option value="0.60">60% better than local building code</option>
+                <option value="0.75">75% better than local building code</option>
+                <option value="0.80">80% - Net Zero Ready</option>
+                <option value="1.00">Net Zero</option>
+            </select>
+        </div>
+    </form>
+
+    <div class="container button">
+        <button href="" id="calculate" class="btn btn-outline-primary btn-lg btn-block">How much can I save?</button>
+    </div>
+
+    <div id="output" class="container">
+
+        <h3>Energy and cost savings for your project:</h3>
+
+        <div class="card bg-light mb-3">
+            <div class="card-block">
+                <h4>Electricity Savings:</h4>
+                <div id="electricityOutput"></div>
+            </div>
+        </div>
+
+        <div class="card bg-light mb-3">
+            <div class="card-block">
+                <h4>Natural Gas Savings:</h4>
+                <div id="gasOutput"></div>
+            </div>
+        </div>
+
+        <div class="card bg-light mb-3">
+            <div class="card-block">
+                <h4>Diesel Savings:</h4>
+                <div id="oilOutput"></div>
+            </div>
+        </div>
+
+        <div class="card bg-light mb-3">
+            <div class="card-block">
+                <h4>GHG Emissions Savings:</h4>
+                <div id="emissionsOutput"></div>
+            </div>
+        </div>
+
+        <div class="card bg-light mb-3">
+            <div class="card-block">
+                <h4>Cost Savings:</h4>
+                <div id="costOutput"></div>
+            </div>
+        </div>
+
+        <div class="card bg-light mb-3">
+            <div class="card-block">
+                <h4>Net Present Value:</h4>
+                <div id="npvOutput"></div>
+            </div>
+        </div>
+
+        <div>
+            <p id="result"></p>
+        </div>
+
+    </div>
+
+    <script type="module" src="index2.js" async defer></script>
+    <script type="module" src="cities.js" async defer></script>
+
+</body>
+
+</html>
